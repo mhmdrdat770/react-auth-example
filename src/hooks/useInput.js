@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useInput = (init = {}) => {
+export const useInput = (init = {}, onSubmit = () => {}) => {
     const [inputs,setInputs] = useState(init)
 
     const handleInput = (event) => {
@@ -12,6 +12,7 @@ export const useInput = (init = {}) => {
 
     return {
         inputs,
-        handleInput
+        handleInput,
+        onSubmit
     }
 }
