@@ -1,5 +1,5 @@
 import axios from "axios";
-const axios = axios.create({
+const http = axios.create({
     baseURL : 'http://localhost:8000/',
     headers : {
         withCredentials : true
@@ -7,4 +7,4 @@ const axios = axios.create({
 
 })
 
-export default axios
+export default http

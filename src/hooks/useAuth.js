@@ -1,21 +1,7 @@
 import axios from "../libs/axios"
 export const useAuth = () => {
 
-    const user = async () => {
-        try {
-            const { data, status } = await
-                axios
-                    .get('api/user')
 
-            if (status === 200) {
-                return data
-            }
-            return null
-        }
-        catch (e) {
-            console.log(e.message)
-        }
-    }
 
     const csrf = async () => await axios.get('sanctum/csrf-cookie')
 
@@ -43,7 +29,6 @@ export const useAuth = () => {
     }
 
     return {
-        user,
         login,
         register
     }

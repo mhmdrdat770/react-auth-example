@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom'
 import { useInput } from '../../hooks/useInput'
+import { useDispatch } from '../../hooks/useUser'
 
 const Register = () => {
+
+    const dispatch = useDispatch()
 
     const { inputs: { email, password }, handleInput, onSubmit } = useInput({
         email: "",
@@ -9,7 +12,9 @@ const Register = () => {
     },
         async (e, inputs) => {
             e.preventDefault()
+            
             console.log(inputs)
+
         }
     )
 
