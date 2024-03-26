@@ -5,20 +5,20 @@ import Register from '../components/auth/Register'
 import Dashbord from '../components/dashbord/Dashbord'
 export const router = createBrowserRouter([
     {
-        path : "/",
-        element : <App />,
-        children : [
+        path: "/",
+        element: <App />,
+        children: [
             {
-                path : "/",
-                element : <Dashbord />
+                path: "/",
+                element: <Dashbord />
             },
             {
-                path : "auth/login",
-                element : <Login />
+                path: "auth/login",
+                element: <Login />
             },
             {
-                path : "auth/register",
-                element : <Register />
+                path: "auth/register",
+                element: <Register />
             },
         ]
     }
