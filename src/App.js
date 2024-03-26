@@ -2,12 +2,22 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './fonts/IranSans/Webfonts/fontiran.css'
 import './App.css'
 import { Outlet } from 'react-router-dom';
-import AuthProvider from './providers/AuthProvider';
+import { useUser } from './hooks/useUser';
+import Spinner from './components/spinner/Spinner';
 const App = () => {
+
+  const { loading } = useUser()
   return (
-    <AuthProvider>
-      <Outlet />
-    </AuthProvider>
+    <>
+      {loading ? (
+        <Spinner />
+
+      ) : (
+        <Outlet />
+
+      )}
+    </>
+
   )
 }
 

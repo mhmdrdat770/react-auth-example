@@ -5,7 +5,7 @@ import { useReducerAsync } from "use-reducer-async";
 
 const initialState = {
     user: null,
-    loading: false
+    loading: true
 };
 
 const reducer = (state, action) => {
