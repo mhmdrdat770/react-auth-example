@@ -9,13 +9,13 @@ const Register = () => {
 
     const { login } = useAuth()
 
-    const user = useUser();
+    const {user , loading} = useUser();
 
     const navigate = useNavigate()
 
 
     useEffect(() => {
-        if(!user.loading && user.user){
+        if(!loading && user){
             navigate('/')
         }
     },[user])
