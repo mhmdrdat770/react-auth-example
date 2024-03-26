@@ -1,8 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useInput } from '../../hooks/useInput'
 import { useDispatch, useUser } from '../../hooks/useUser'
 import {useAuth} from '../../hooks/useAuth'
 import { useEffect } from 'react'
+import { useFormik } from 'formik'
 
 
 const Register = () => {
@@ -21,15 +21,17 @@ const Register = () => {
 
     const { register } = useAuth()
 
-    const { inputs: { name, email, password }, handleInput, onSubmit } = useInput({
-        name: "",
-        email: "",
-        password: "",
-    },
-        async (e, inputs) => {
-            e.preventDefault()
+
+    const formik = useFormik({
+        initialValues : {
+            name : "",
+            email : "",
+            password : ""
+        },
+
+        onSubmit : async (values) => {
             try{
-                const {success} = await register(inputs)
+                const {success} = await register(values)
 
                 if(success){
                     dispatch({ type : 'LOAD_USER' })
@@ -39,13 +41,15 @@ const Register = () => {
                 console.log(e.message)
             }
         }
-    )
+    })
+
+
     return (
         <>
             <div className="container">
                 <div className="row justify-content-center">
                 <div className="col-12 col-md-4 shadow border mt-4">
-                        <form onSubmit={(e) => onSubmit(e, { email, password,name })}>
+                        <form onSubmit={formik.handleSubmit}>
                             <div className="form-group">
                                 <div className="row p-5">
 
@@ -56,18 +60,18 @@ const Register = () => {
 
                                     <div className="col-12 my-2">
                                         <label htmlFor="name">نام</label>
-                                        <input type="text" name="name" className="form-control mt-2" id="name" placeholder="نام" value={name} onChange={handleInput} />
+                                        <input type="text" className="form-control mt-2" id="name" placeholder="نام" {...formik.getFieldProps('name')} />
                                     </div>
 
                                     <div className="col-12 my-2">
                                         <label htmlFor="email">ایمیل</label>
-                                        <input type="text" name="email" className="form-control mt-2" id="email" placeholder="ایمیل" value={email} onChange={handleInput} />
+                                        <input type="text" className="form-control mt-2" id="email" placeholder="ایمیل" {...formik.getFieldProps('email')} />
                                     </div>
 
                                     <div className="col-12 my-2">
                                         <div className="form-group">
                                             <label htmlFor="password">رمز عبور</label>
-                                            <input type="password" name="password" className="form-control mt-2" id="password" placeholder="رمز عبور" value={password} onChange={handleInput} />
+                                            <input type="password" className="form-control mt-2" id="password" placeholder="رمز عبور" {...formik.getFieldProps('password')} />
                                         </div>
                                     </div>
 

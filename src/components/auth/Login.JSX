@@ -1,49 +1,52 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useInput } from '../../hooks/useInput'
-import { useDispatch,useUser } from '../../hooks/useUser'
-import {useAuth} from '../../hooks/useAuth'
+import { useDispatch, useUser } from '../../hooks/useUser'
+import { useAuth } from '../../hooks/useAuth'
 import { useEffect } from 'react'
+import { useFormik } from 'formik'
 const Register = () => {
 
     const dispatch = useDispatch()
 
     const { login } = useAuth()
 
-    const {user , loading} = useUser();
+    const { user, loading } = useUser();
 
     const navigate = useNavigate()
 
-
-    useEffect(() => {
-        if(!loading && user){
-            navigate('/')
-        }
-    },[user])
-
-    const { inputs: { email, password }, handleInput, onSubmit } = useInput({
-        email: "",
-        password: "",
-    },
-        async (e, inputs) => {
-            e.preventDefault()
-            try{
-                const {success} = await login(inputs)
-                if(success){
-                    dispatch({ type : 'LOAD_USER' })
+    const formik = useFormik({
+        initialValues: {
+            email: "",
+            password: "",
+        },
+        onSubmit: async (values) => {
+            try {
+                const { success } = await login(values)
+                if (success) {
+                    dispatch({ type: 'LOAD_USER' })
                 }
             }
-            catch(e){
+            catch (e) {
                 console.log(e.message)
             }
         }
-    )
+    })
+
+
+    useEffect(() => {
+        if (!loading && user) {
+            navigate('/')
+        }
+    }, [user])
+
+
+
 
     return (
         <>
             <div className="container">
                 <div className="row justify-content-center">
-                <div className="col-12 col-md-4 shadow border mt-4">
-                        <form onSubmit={(e) => onSubmit(e, { email, password })}>
+                    <div className="col-12 col-md-4 shadow border mt-4">
+                        <form onSubmit={formik.handleSubmit}>
                             <div className="form-group">
                                 <div className="row p-5">
 
@@ -54,13 +57,13 @@ const Register = () => {
 
                                     <div className="col-12 my-2">
                                         <label htmlFor="email">ایمیل</label>
-                                        <input type="text" name="email" className="form-control mt-2" id="email" placeholder="ایمیل" value={email} onChange={handleInput} />
+                                        <input type="text" className="form-control mt-2" id="email" placeholder="ایمیل" {...formik.getFieldProps("email")} />
                                     </div>
 
                                     <div className="col-12 my-2">
                                         <div className="form-group">
                                             <label htmlFor="password">رمز عبور</label>
-                                            <input type="password" name="password" className="form-control mt-2" id="password" placeholder="رمز عبور" value={password} onChange={handleInput} />
+                                            <input type="password" className="form-control mt-2" id="password" placeholder="رمز عبور" {...formik.getFieldProps("password")} />
                                         </div>
                                     </div>
 
