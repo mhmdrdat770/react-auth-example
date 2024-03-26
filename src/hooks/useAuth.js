@@ -28,8 +28,20 @@ export const useAuth = () => {
         }
     }
 
+    const logout = async () => {
+        try {
+            const { data } = await axios
+                .get('api/auth/logout', inputs)
+                return data
+        }
+        catch (e) {
+            console.log(e.message)
+        }
+    }
+
     return {
         login,
-        register
+        register,
+        logout
     }
 }
