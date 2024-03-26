@@ -27,7 +27,7 @@ const Register = () => {
         async (e, inputs) => {
             e.preventDefault()
             try{
-                const {message,success} = await login(inputs)
+                const {success} = await login(inputs)
                 if(success){
                     dispatch({ type : 'LOAD_USER' })
                 }

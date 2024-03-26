@@ -29,7 +29,7 @@ const Register = () => {
         async (e, inputs) => {
             e.preventDefault()
             try{
-                const {message,success} = await register(inputs)
+                const {success} = await register(inputs)
 
                 if(success){
                     dispatch({ type : 'LOAD_USER' })
