@@ -31,11 +31,13 @@ const asyncActionHandlers = {
                 dispatch({ type: 'END_LOAD_USER', payload: data });
                 return;
             }
-            dispatch({ type: 'REJECT_LOAD_USER' });
-            return;
+
+
         }
         catch (e) {
             console.log(e.message)
+            dispatch({ type: 'REJECT_LOAD_USER' });
+
         }
     },
 };
@@ -47,8 +49,8 @@ const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducerAsync(reducer, initialState, asyncActionHandlers);
 
     useEffect(() => {
-        dispatch({ type : 'LOAD_USER' })
-    },[])
+        dispatch({ type: 'LOAD_USER' })
+    }, [])
 
     return (
         <UserContext.Provider value={state}>
