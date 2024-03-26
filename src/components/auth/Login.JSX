@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom'
 import { useInput } from '../../hooks/useInput'
 import { useDispatch } from '../../hooks/useUser'
-
+import {useAuth} from '../../hooks/useAuth'
 const Register = () => {
 
     const dispatch = useDispatch()
+
+    const { login } = useAuth()
 
     const { inputs: { email, password }, handleInput, onSubmit } = useInput({
         email: "",
@@ -12,9 +14,16 @@ const Register = () => {
     },
         async (e, inputs) => {
             e.preventDefault()
-            
-            console.log(inputs)
+            try{
+                const {data : user} = await login(inputs)
 
+                if(user.success){
+                    dispatch({ type : 'LOAD_USER' })
+                }
+            }
+            catch(e){
+                console.log(e.message)
+            }
         }
     )
 
