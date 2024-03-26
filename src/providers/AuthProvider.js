@@ -25,7 +25,7 @@ const asyncActionHandlers = {
         try {
             const { data, status } = await
                 axios
-                    .get('api/user')
+                    .get('api/auth/user')
 
             if (status === 200) {
                 dispatch({ type: 'END_LOAD_USER', payload: data });
