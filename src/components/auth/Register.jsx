@@ -44,7 +44,7 @@ const Register = () => {
         <>
             <div className="container">
                 <div className="row justify-content-center">
-                    <div className="col-4 shadow border mt-4">
+                <div className="col-12 col-md-4 shadow border mt-4">
                         <form onSubmit={(e) => onSubmit(e, { email, password,name })}>
                             <div className="form-group">
                                 <div className="row p-5">
