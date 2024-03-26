@@ -1,10 +1,21 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useInput } from '../../hooks/useInput'
-import { useDispatch } from '../../hooks/useUser'
+import { useDispatch, useUser } from '../../hooks/useUser'
 import {useAuth} from '../../hooks/useAuth'
+import { useEffect } from 'react'
 
 
 const Register = () => {
+
+    const user = useUser();
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if(!user.loading && user.user){
+            navigate('/')
+        }
+    },[user])
 
     const dispatch = useDispatch()
 
@@ -18,9 +29,9 @@ const Register = () => {
         async (e, inputs) => {
             e.preventDefault()
             try{
-                const {data : user} = await register(inputs)
+                const {message,success} = await register(inputs)
 
-                if(user.success){
+                if(success){
                     dispatch({ type : 'LOAD_USER' })
                 }
             }

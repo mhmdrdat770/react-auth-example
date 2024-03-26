@@ -1,12 +1,24 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useInput } from '../../hooks/useInput'
-import { useDispatch } from '../../hooks/useUser'
+import { useDispatch,useUser } from '../../hooks/useUser'
 import {useAuth} from '../../hooks/useAuth'
+import { useEffect } from 'react'
 const Register = () => {
 
     const dispatch = useDispatch()
 
     const { login } = useAuth()
+
+    const user = useUser();
+
+    const navigate = useNavigate()
+
+
+    useEffect(() => {
+        if(!user.loading && user.user){
+            navigate('/')
+        }
+    },[user])
 
     const { inputs: { email, password }, handleInput, onSubmit } = useInput({
         email: "",
@@ -15,9 +27,8 @@ const Register = () => {
         async (e, inputs) => {
             e.preventDefault()
             try{
-                const {data : user} = await login(inputs)
-
-                if(user.success){
+                const {message,success} = await login(inputs)
+                if(success){
                     dispatch({ type : 'LOAD_USER' })
                 }
             }
