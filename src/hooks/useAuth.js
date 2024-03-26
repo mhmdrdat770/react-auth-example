@@ -31,7 +31,7 @@ export const useAuth = () => {
     const logout = async () => {
         try {
             const { data } = await axios
-                .get('api/auth/logout', inputs)
+                .get('api/auth/logout')
                 return data
         }
         catch (e) {
